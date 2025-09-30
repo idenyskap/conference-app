@@ -1,0 +1,695 @@
+.lottery-modal .modal-content {
+    max-width: 90vw;
+    max-height: 90vh;
+    padding: 0;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    overflow: hidden;
+    position: relative;
+}
+
+.lottery-modal-content {
+    position: relative;
+    min-height: 600px;
+}
+
+.lottery-title {
+    color: white;
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+    animation: titleGlow 2s ease-in-out infinite;
+}
+
+@keyframes titleGlow {
+    0%, 100% { text-shadow: 0 0 20px rgba(255, 255, 255, 0.5); }
+    50% { text-shadow: 0 0 40px rgba(255, 255, 255, 0.8); }
+}
+
+.action-area {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.reveal-button {
+    padding: 1rem 3rem;
+    background: linear-gradient(135deg, #FFD700, #FFA500);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 10px 30px rgba(255, 165, 0, 0.4);
+    transition: all 0.3s ease;
+    animation: buttonPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes buttonPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.reveal-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 15px 40px rgba(255, 165, 0, 0.6);
+}
+
+.lottery-single-winner {
+    padding: 3rem;
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.lottery-main-stage {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4rem;
+    flex: 1;
+    position: relative;
+}
+
+.names-roller-container {
+    width: 300px;
+    height: 400px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 3px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+}
+
+.names-roller-container::before,
+.names-roller-container::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 50px;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.names-roller-container::before {
+    top: 0;
+    background: linear-gradient(to bottom, #1e3c72, transparent);
+}
+
+.names-roller-container::after {
+    bottom: 0;
+    background: linear-gradient(to top, #1e3c72, transparent);
+}
+
+.names-roller {
+    animation: rollNames 2s linear infinite;
+}
+
+@keyframes rollNames {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-50%); }
+}
+
+.scroll-name-item {
+    color: white;
+    padding: 1rem;
+    font-size: 1.2rem;
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    opacity: 0.8;
+}
+
+.mystery-card {
+    width: 300px;
+    height: 400px;
+    position: relative;
+    perspective: 1000px;
+}
+
+.mystery-front,
+.mystery-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.mystery-front {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border: 3px solid rgba(255, 255, 255, 0.3);
+}
+
+.mystery-icon {
+    font-size: 8rem;
+    animation: questionBounce 1s ease-in-out infinite;
+}
+
+@keyframes questionBounce {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+.mystery-back {
+    background: linear-gradient(135deg, #FFD700, #FFA500);
+    transform: rotateY(180deg);
+    border: 3px solid #FFD700;
+    box-shadow: 0 0 50px rgba(255, 215, 0, 0.5);
+}
+
+.mystery-card.revealed .mystery-front {
+    transform: rotateY(-180deg);
+}
+
+.mystery-card.revealed .mystery-back {
+    transform: rotateY(0);
+}
+
+.winner-reveal {
+    text-align: center;
+    color: white;
+}
+
+.winner-crown {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    animation: crownBounce 1s ease-in-out;
+}
+
+@keyframes crownBounce {
+    0% { transform: translateY(-50px) scale(0); }
+    50% { transform: translateY(10px) scale(1.2); }
+    100% { transform: translateY(0) scale(1); }
+}
+
+.winner-name-big {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.winner-surname-big {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    opacity: 0.9;
+}
+
+.winner-donation-info {
+    font-size: 1.2rem;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+}
+
+.lottery-multiple-winners {
+    padding: 3rem;
+    position: relative;
+    height: 100%;
+}
+
+.lottery-stage-multiple {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+}
+
+.names-background-scroll {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0.1;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.bg-scroll-line {
+    white-space: nowrap;
+    color: white;
+    font-size: 1.5rem;
+    animation: bgScroll 20s linear infinite;
+    margin: 2rem 0;
+}
+
+.bg-scroll-line.reverse {
+    animation-direction: reverse;
+}
+
+@keyframes bgScroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+.bg-name {
+    padding: 0 2rem;
+}
+
+.mystery-cards-grid {
+    display: flex;
+    gap: 2rem;
+    z-index: 10;
+    position: relative;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 900px;
+}
+
+.mystery-card-multi {
+    width: 150px;
+    height: 200px;
+    perspective: 1000px;
+    cursor: pointer;
+}
+
+.card-flipper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+.mystery-card-multi.flipped .card-flipper {
+    transform: rotateY(180deg);
+}
+
+.card-front-multi,
+.card-back-multi {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.card-front-multi {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.card-number {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(255, 255, 255, 0.2);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: white;
+}
+
+.card-question {
+    font-size: 4rem;
+    animation: questionPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes questionPulse {
+    0%, 100% { transform: scale(1) rotate(0deg); }
+    50% { transform: scale(1.1) rotate(5deg); }
+}
+
+.card-back-multi {
+    background: linear-gradient(135deg, #FFD700, #FFA500);
+    transform: rotateY(180deg);
+    text-align: center;
+    color: white;
+}
+
+.mini-crown {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.winner-name-multi {
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin-bottom: 0.25rem;
+}
+
+.winner-surname-multi {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    opacity: 0.9;
+}
+
+.winner-amount-multi {
+    font-size: 0.9rem;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 0.25rem 0.5rem;
+    border-radius: 10px;
+}
+
+.lottery-many-winners {
+    padding: 2rem 3rem;
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    max-height: 85vh;
+    overflow-y: auto;
+}
+
+.lottery-many-winners .lottery-title {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+}
+
+.lottery-stage-many {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: auto;
+    margin-bottom: 1rem;
+}
+
+.carousel-container {
+    width: 100%;
+    max-width: 800px;
+    height: 120px;
+    overflow: hidden;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
+    background: rgba(0, 0, 0, 0.2);
+    margin-bottom: 1rem;
+}
+
+.carousel-track {
+    display: flex;
+    animation: carouselSlide 10s linear infinite;
+}
+
+@keyframes carouselSlide {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+.carousel-item {
+    min-width: 200px;
+    padding: 2rem;
+    text-align: center;
+    color: white;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.carousel-name {
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.carousel-surname {
+    opacity: 0.8;
+}
+
+.countdown-display {
+    text-align: center;
+    color: white;
+    margin: 1rem 0;
+}
+
+.countdown-number {
+    font-size: 5rem;
+    font-weight: bold;
+    color: #FFD700;
+    text-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+}
+
+@keyframes countdownPulse {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.5); opacity: 0.8; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.countdown-label {
+    font-size: 1.2rem;
+    opacity: 0.8;
+    margin-top: 0.5rem;
+}
+
+.winners-list-container {
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    margin: 0.5rem 0 1rem 0;
+    max-height: 55vh;
+    overflow-y: auto;
+}
+
+.winners-list-container h3 {
+    color: white;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+}
+
+.winners-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0.8rem;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.winner-card-list {
+    background: linear-gradient(135deg, #FFD700, #FFA500);
+    border-radius: 12px;
+    padding: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    color: white;
+    box-shadow: 0 5px 20px rgba(255, 165, 0, 0.3);
+}
+
+.winner-position {
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.winner-info {
+    flex: 1;
+}
+
+.winner-info strong {
+    display: block;
+    font-size: 1.1rem;
+    margin-bottom: 0.25rem;
+}
+
+.winner-donation {
+    opacity: 0.9;
+    font-size: 0.9rem;
+}
+
+.confetti-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 1000;
+}
+
+.confetti-piece {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    animation: confettiFall linear infinite;
+}
+
+@keyframes confettiFall {
+    0% {
+        transform: translateY(-100vh) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 1;
+    }
+}
+
+.spotlight-effect {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    height: 300px;
+    pointer-events: none;
+    z-index: 999;
+}
+
+.spotlight-beam {
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.3), transparent);
+    animation: spotlightPulse 2s ease-in-out infinite;
+}
+
+@keyframes spotlightPulse {
+    0%, 100% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(1.5); opacity: 0.8; }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+@keyframes slideInUp {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@media (max-width: 768px) {
+    .lottery-main-stage {
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .names-roller-container,
+    .mystery-card {
+        width: 250px;
+        height: 300px;
+    }
+
+    .mystery-cards-grid {
+        gap: 1rem;
+    }
+
+    .mystery-card-multi {
+        width: 120px;
+        height: 160px;
+    }
+
+    .winners-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .lottery-many-winners {
+        padding: 1.5rem;
+    }
+
+    .lottery-many-winners .lottery-title {
+        font-size: 1.5rem;
+    }
+
+    .carousel-container {
+        height: 100px;
+    }
+
+    .winners-list-container {
+        max-height: 50vh;
+        padding: 1rem;
+    }
+}
+
+.lottery-close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    border-radius: 50%;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 1000;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+.lottery-close-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.6);
+    transform: rotate(90deg);
+}
+
+.complete-button {
+    padding: 1rem 3rem;
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 10px 30px rgba(16, 185, 129, 0.4);
+    transition: all 0.3s ease;
+}
+
+.complete-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 15px 40px rgba(16, 185, 129, 0.6);
+}
+
+.lottery-many-winners .action-area {
+    position: relative;
+    bottom: auto;
+    margin-top: auto;
+    padding-top: 1rem;
+}
+
+.lottery-modal .modal-content {
+    max-height: 95vh;
+    overflow-y: auto;
+}
+
+.lottery-modal-content {
+    position: relative;
+    min-height: 400px;
+    max-height: 95vh;
+    overflow-y: auto;
+}

@@ -1,0 +1,41 @@
+# Credentials - NEVER COMMIT THESE!
+conference-backend/src/main/resources/credentials.json
+**/credentials.json
+
+# Backend - Java/Maven
+conference-backend/target/
+conference-backend/.mvn/
+conference-backend/mvnw
+conference-backend/mvnw.cmd
+*.class
+*.jar
+*.war
+
+# Frontend - Node
+node_modules/
+npm-debug.log*
+package-lock.json
+
+# IDE files
+.idea/
+*.iml
+.vscode/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+logs/
+
+# Environment files
+.env
+.env.local
+
+# Temporary files
+*.tmp
+*.temp

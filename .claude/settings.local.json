@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mvn clean:*)",
+      "Bash(mvn dependency:*)",
+      "Bash(npx http-server:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

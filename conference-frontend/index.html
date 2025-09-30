@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Система управління конференцією</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="lottery-styles.css">
+</head>
+<body>
+<div id="loginScreen" class="screen active">
+    <div class="login-container">
+        <div class="login-box">
+            <h1>Система управління конференцією</h1>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="userRole">Роль:</label>
+                    <select id="userRole" required>
+                        <option value="">Виберіть роль</option>
+                        <option value="hostess">Хостес</option>
+                        <option value="admin">Адміністратор</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="password">Пароль:</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Увійти</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="mainApp" class="screen">
+    <header class="app-header">
+        <div class="header-content">
+            <h1>Конференція 2025</h1>
+            <div class="header-info">
+                <div class="connection-status">
+                    <span class="status-indicator" id="statusIndicator"></span>
+                    <span id="statusText">Онлайн</span>
+                </div>
+                <div class="user-info">
+                    <span id="currentUser">Користувач</span>
+                    <button id="logoutBtn" class="btn btn-secondary">Вийти</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <nav class="app-nav">
+        <button class="nav-btn active" data-tab="checkin">
+            <span class="nav-icon">✓</span>
+            Реєстрація
+        </button>
+        <button class="nav-btn" data-tab="donation">
+            <span class="nav-icon">💰</span>
+            Донати
+        </button>
+        <button class="nav-btn admin-only" data-tab="participants">
+            <span class="nav-icon">👥</span>
+            Учасники
+        </button>
+        <button class="nav-btn admin-only" data-tab="lottery">
+            <span class="nav-icon">🎲</span>
+            Розіграш
+        </button>
+        <button class="nav-btn admin-only" data-tab="settings">
+            <span class="nav-icon">⚙️</span>
+            Налаштування
+        </button>
+    </nav>
+
+    <main class="app-content">
+        <div id="checkinTab" class="tab-panel active">
+            <div class="panel-header">
+                <h2>Реєстрація учасників</h2>
+            </div>
+            <div class="panel-body">
+                <div class="qr-scanner-container">
+                    <div id="qrReader"></div>
+                    <div class="scanner-controls">
+                        <button id="startScanBtn" class="btn btn-primary">
+                            Запустити сканер
+                        </button>
+                        <button id="stopScanBtn" class="btn btn-secondary" style="display:none;">
+                            Зупинити сканер
+                        </button>
+                    </div>
+                    <div class="manual-input-group">
+                        <input type="text" id="manualQrInput" placeholder="Або введіть QR-код вручну">
+                        <button id="manualCheckInBtn" class="btn btn-primary">
+                            Зареєструвати
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="donationTab" class="tab-panel">
+            <div class="panel-header">
+                <h2>Реєстрація донатів</h2>
+            </div>
+            <div class="panel-body">
+                <div class="qr-scanner-container">
+                    <div id="donationQrReader"></div>
+                    <div class="scanner-controls">
+                        <button id="startDonationScanBtn" class="btn btn-primary">
+                            Запустити сканер
+                        </button>
+                        <button id="stopDonationScanBtn" class="btn btn-secondary" style="display: none;">
+                            Зупинити сканер
+                        </button>
+                    </div>
+                </div>
+
+                <form id="donationForm" class="donation-form">
+                    <div class="form-group">
+                        <label for="donationQrCode">QR-код учасника:</label>
+                        <input type="text" id="donationQrCode" placeholder="Або введіть QR-код вручну" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="donationAmount">Сума донату (грн):</label>
+                        <input type="number" id="donationAmount" min="1" step="0.01" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        Додати донат
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div id="participantsTab" class="tab-panel">
+            <div class="panel-header">
+                <h2>Список учасників</h2>
+                <div class="panel-actions">
+                    <button id="exportExcelBtn" class="btn btn-secondary">
+                        Експорт в Excel
+                    </button>
+                    <button id="exportDonorsBtn" class="btn btn-secondary">
+                        Експорт донорів 500+
+                    </button>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value" id="totalParticipants">0</div>
+                        <div class="stat-label">Всього учасників</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="presentParticipants">0</div>
+                        <div class="stat-label">Присутні</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="totalDonations">0₴</div>
+                        <div class="stat-label">Сума донатів</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="bigDonors">0</div>
+                        <div class="stat-label">Донори 500+</div>
+                    </div>
+                </div>
+
+                <div class="search-container">
+                    <input type="text" id="participantSearch" placeholder="Пошук за іменем або QR-кодом...">
+                </div>
+
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                        <tr>
+                            <th>QR-код</th>
+                            <th>Ім'я</th>
+                            <th>Прізвище</th>
+                            <th>Присутність</th>
+                            <th>Донат (грн)</th>
+                        </tr>
+                        </thead>
+                        <tbody id="participantsTableBody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="lotteryTab" class="tab-panel">
+            <div class="panel-header">
+                <h2>Розіграш призів</h2>
+            </div>
+            <div class="panel-body">
+                <div class="lottery-container">
+                    <div class="lottery-stats">
+                        <div class="lottery-stat-card">
+                            <div class="lottery-stat-icon">👥</div>
+                            <div class="lottery-stat-info">
+                                <div class="lottery-stat-value" id="eligibleCount">0</div>
+                                <div class="lottery-stat-label">Учасників (500+ грн)</div>
+                            </div>
+                        </div>
+                        <div class="lottery-stat-card">
+                            <div class="lottery-stat-icon">💰</div>
+                            <div class="lottery-stat-info">
+                                <div class="lottery-stat-value" id="totalDonationsLottery">0₴</div>
+                                <div class="lottery-stat-label">Загальна сума донатів</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lottery-setup">
+                        <h3>Налаштування розіграшу</h3>
+                        <div class="lottery-form">
+                            <div class="form-group">
+                                <label for="winnersCount">Кількість переможців:</label>
+                                <input type="number" id="winnersCount" min="1" max="10" value="1" placeholder="Кількість переможців">
+                                <small class="form-hint">Оберіть кількість переможців</small>
+                            </div>
+
+                            <button id="startLotteryBtn" class="btn btn-primary btn-large">
+                                🎯 Розпочати розіграш
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="lotteryModal" class="modal lottery-modal">
+            <div class="modal-content lottery-modal-content">
+                <div id="lotteryAnimation" class="lottery-animation-container">
+                </div>
+            </div>
+        </div>
+
+        <div id="settingsTab" class="tab-panel">
+            <div class="panel-header">
+                <h2>Налаштування</h2>
+            </div>
+            <div class="panel-body">
+                <div class="settings-section">
+                    <h3>Імпорт даних</h3>
+                    <div class="file-upload-container">
+                        <input type="file" id="importFile" accept=".xlsx,.xls" style="display:none;">
+                        <button onclick="document.getElementById('importFile').click()" class="btn btn-secondary">
+                            Вибрати файл Excel
+                        </button>
+                        <button id="importBtn" class="btn btn-primary">
+                            Імпортувати
+                        </button>
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <h3>Додати учасника</h3>
+                    <form id="addParticipantForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <input type="text" id="newQrCode" placeholder="QR-код" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" id="newName" placeholder="Ім'я" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" id="newSurname" placeholder="Прізвище" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            Додати учасника
+                        </button>
+                    </form>
+                </div>
+
+                <div class="settings-section">
+                    <h3>Синхронізація</h3>
+                    <button id="syncBtn" class="btn btn-secondary">
+                        Синхронізувати з Google Sheets
+                    </button>
+                    <div id="lastSync">Остання синхронізація: -</div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<div id="notificationContainer" class="notification-container"></div>
+
+<script src="https://unpkg.com/html5-qrcode/html5-qrcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="lottery.js"></script>
+<script src="config.js"></script>
+<script src="api.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
