@@ -215,7 +215,7 @@ conference-app/
 
 ## Security Notes
 
-⚠️ **Important:** Never commit sensitive files to Git!
+**Important:** Never commit sensitive files to Git!
 
 Create a `.gitignore` file with:
 ```
@@ -257,11 +257,3 @@ Thumbs.db
 - Ensure you're using HTTPS or localhost
 - Grant camera permissions when prompted
 - Use manual input as fallback
-
-## License
-
-This project is for educational and event management purposes.
-
-## Contributing
-
-Feel free to submit issues and enhancement requests!
